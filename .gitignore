@@ -1,3 +1,2 @@
 # Eliminate tracking these files
 __pycache__/*
-data/*
