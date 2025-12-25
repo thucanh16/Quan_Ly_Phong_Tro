@@ -2,7 +2,7 @@
     {
         "invoice_id": "INV_2025_12_101",
         "room_id": "101",
-        "tenant_id": "TO1",
+        "tenant_id": "TO01",
         "month": "12/2025",
         "electricity_cost": 150000,
         "water_cost": 50000,
@@ -10,4 +10,4 @@
         "total": 2700000,
         "status": "Đã thanh toán"
     }
-]  
+]   
