@@ -48,4 +48,4 @@ Xây dựng giao diện đồ họa
 
 Tác giả
 
-Nguyễn Thị Thục Anh – Sư phạm Tin học – ĐH Sư phạm Huế#
+Nguyễn Thị Thục Anh – Sư phạm Tin học – ĐH Sư phạm Huế#git
