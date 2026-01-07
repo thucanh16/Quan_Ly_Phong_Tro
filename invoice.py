@@ -1,88 +1,47 @@
-from data_handler import load_data, save_data
-from datetime import datetime
-import json
-from reporting import export_invoice_to_txt # Kết nối báo cáo
+import datetime
 
-<<<<<<< HEAD
-ROOM_PATH = "data/rooms.json"
-TENANT_PATH = "data/tenants.json"
-INVOICE_PATH = "data/invoices.json"
-SERVICE_PATH = "data/services.json"
+class Invoice:
+    def __init__(self, customer_name, items):
+        """
+        Khởi tạo hóa đơn
+        :param customer_name: Tên khách hàng
+        :param items: Danh sách các món đồ (mỗi món là một dict: {'name': str, 'price': float, 'quantity': int})
+        """
+        self.customer_name = customer_name
+        self.items = items
+        self.date = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-def create_invoice(room_id, dien_moi, dien_cu):
-    rooms = load_data(ROOM_PATH)
-    tenants = load_data(TENANT_PATH)
-    invoices = load_data(INVOICE_PATH)
+    def calculate_total(self):
+        """Tính tổng tiền hóa đơn"""
+        total = sum(item['price'] * item['quantity'] for item in self.items)
+        return total
+
+    def display_invoice(self):
+        """In hóa đơn ra màn hình"""
+        print("-" * 30)
+        print(f"HÓA ĐƠN BÁN HÀNG")
+        print(f"Khách hàng: {self.customer_name}")
+        print(f"Ngày: {self.date}")
+        print("-" * 30)
+        
+        for item in self.items:
+            line_total = item['price'] * item['quantity']
+            print(f"{item['name']:<15} x{item['quantity']:<3} {line_total:>10,.0f} VNĐ")
+        
+        print("-" * 30)
+        print(f"TỔNG CỘNG: {self.calculate_total():>18,.0f} VNĐ")
+        print("-" * 30)
+
+# --- Chạy thử chương trình ---
+if __name__ == "__main__":
+    # Danh sách mặt hàng mẫu
+    cart = [
+        {'name': 'Sữa', 'price': 25000, 'quantity': 2},
+        {'name': 'Bánh mì', 'price': 15000, 'quantity': 5},
+        {'name': 'Trứng', 'price': 4000, 'quantity': 10}
+    ]
     
-    try:
-        with open(SERVICE_PATH, 'r', encoding='utf-8') as f:
-            services = json.load(f)
-    except FileNotFoundError:
-        print("Lỗi: Không thấy services.json!")
-        return
-
-    room = next((r for r in rooms if r["room_id"] == room_id), None)
-    tenant = next((t for t in tenants if t["room_id"] == room_id), None)
-
-    if not room or not tenant:
-        print("Lỗi: Phòng trống hoặc không tồn tại!")
-        return
-
-    # Tính toán
-    tien_dien = (dien_moi - dien_cu) * services["electricity"]
-    tong_cong = room["price"] + tien_dien + services["water"] + services["internet"] + services["garbage"]
-
-    # Lưu dữ liệu
-    new_invoice = {
-        "room_id": room_id,
-        "tenant": tenant["name"],
-        "details": {
-            "room_price": room["price"],
-            "electricity": tien_dien,
-            "water": services["water"],
-            "internet": services["internet"],
-            "garbage": services["garbage"]
-        },
-        "total_amount": tong_cong,
-        "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    }
-
-    invoices.append(new_invoice)
-    save_data(INVOICE_PATH, invoices)
+    # Tạo và in hóa đơn
+    my_invoice = Invoice("Nguyễn Văn A", cart)
+    my_invoice.display_invoice()
     
-    # GỌI XUẤT FILE TXT
-    export_invoice_to_txt(new_invoice)
-
-    print(f"\n--- ĐÃ TÍNH XONG PHÒNG {room_id} ---")
-    print(f"Tổng tiền: {tong_cong:,} VNĐ")
-=======
-def create_invoice(room_id, electricity, water):
-    # Đảm bảo đọc đúng file
-    rooms = load_data("data/rooms.json")
-    
-    # Tìm phòng - Chú ý ép kiểu str để so sánh chính xác
-    room = next((r for r in rooms if str(r.get('id')) == str(room_id)), None)
-    
-    if room:
-        try:
-            # Tính toán tiền bạc
-            price = room.get('price', 0)
-            total = price + (electricity * 3500) + (water * 15000)
-            
-            new_inv = {
-                "room_id": room_id,
-                "total": total,
-                "date": "07/01/2026"
-            }
-            
-            # Lưu vào lịch sử
-            history = load_data("data/history.json")
-            history.append(new_inv)
-            save_data("data/history.json", history)
-            
-            print(f"✅ Thành công! Tổng tiền: {total:,} VNĐ")
-        except Exception as e:
-            print(f"❌ Lỗi tính toán: {e}")
-    else:
-        print(f"❌ Không tìm thấy phòng mã {room_id}!")
->>>>>>> 70e3a2ce428c03e77d49e3036b917639610ec51b
