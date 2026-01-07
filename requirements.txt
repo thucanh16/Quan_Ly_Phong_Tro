@@ -1,0 +1,7 @@
+# Các thư viện chuẩn của Python 3 (không cần cài đặt thêm)
+# Dự án sử dụng:
+# - tkinter (Giao diện người dùng)
+# - json (Xử lý dữ liệu)
+# - datetime (Quản lý thời gian hóa đơn)
+
+# Nếu sau này có dùng thêm thư viện ngoài, hãy liệt kê ở dưới đây.
