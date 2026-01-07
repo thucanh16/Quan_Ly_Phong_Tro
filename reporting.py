@@ -3,16 +3,17 @@ from datetime import datetime
 
 def export_invoice_to_txt(invoice_data):
     """
-    Hàm này nhận dữ liệu hóa đơn và xuất ra file .txt
+    Hàm này nhận dữ liệu hóa đơn từ invoice.py và xuất ra file .txt
     """
     # 1. Tạo thư mục 'exports' nếu chưa có để lưu hóa đơn
     if not os.path.exists('exports'):
         os.makedirs('exports')
 
-    # 2. Đặt tên file theo số phòng và ngày tháng
-    file_name = f"exports/HoaDon_Phong_{invoice_data['room_id']}_{datetime.now().strftime('%d%m%Y_%H%M%S')}.txt"
+    # 2. Đặt tên file theo số phòng và thời gian thực để không bị ghi đè
+    timestamp = datetime.now().strftime('%d%m%Y_%H%M%S')
+    file_name = f"exports/HoaDon_Phong_{invoice_data['room_id']}_{timestamp}.txt"
 
-    # 3. Nội dung hóa đơn
+    # 3. Nội dung hóa đơn được trình bày đẹp mắt
     content = f"""
 ========================================
        HÓA ĐƠN TIỀN PHÒNG TRỌ
@@ -34,17 +35,10 @@ TỔNG CỘNG:         {invoice_data['total_amount']:,} VNĐ
 ========================================
 """
 
-    # 4. Ghi nội dung vào file
+    # 4. Ghi nội dung vào file với bảng mã utf-8 để không lỗi tiếng Việt
     try:
         with open(file_name, 'w', encoding='utf-8') as f:
             f.write(content)
         print(f"✅ Đã xuất hóa đơn thành công tại: {file_name}")
     except Exception as e:
         print(f"❌ Lỗi khi xuất file: {e}")
-
-def get_monthly_revenue(invoices):
-    """
-    Hàm tính tổng doanh thu từ danh sách hóa đơn trong invoices.json
-    """
-    total = sum(inv['total_amount'] for inv in invoices)
-    return total
