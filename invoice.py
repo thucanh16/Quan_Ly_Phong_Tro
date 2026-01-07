@@ -1,47 +1,25 @@
 import datetime
+from config import INVOICES_FILE, INVOICE_UNPAID
+from data_handler import load_data, save_data
 
 class Invoice:
-    def __init__(self, customer_name, items):
-        """
-        Khởi tạo hóa đơn
-        :param customer_name: Tên khách hàng
-        :param items: Danh sách các món đồ (mỗi món là một dict: {'name': str, 'price': float, 'quantity': int})
-        """
+    def __init__(self, room_number, customer_name, items):
+        self.room_number = room_number
         self.customer_name = customer_name
-        self.items = items
+        self.items = items # [{name, price, quantity}]
         self.date = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
     def calculate_total(self):
-        """Tính tổng tiền hóa đơn"""
-        total = sum(item['price'] * item['quantity'] for item in self.items)
-        return total
+        return sum(item['price'] * item['quantity'] for item in self.items)
 
-    def display_invoice(self):
-        """In hóa đơn ra màn hình"""
-        print("-" * 30)
-        print(f"HÓA ĐƠN BÁN HÀNG")
-        print(f"Khách hàng: {self.customer_name}")
-        print(f"Ngày: {self.date}")
-        print("-" * 30)
-        
-        for item in self.items:
-            line_total = item['price'] * item['quantity']
-            print(f"{item['name']:<15} x{item['quantity']:<3} {line_total:>10,.0f} VNĐ")
-        
-        print("-" * 30)
-        print(f"TỔNG CỘNG: {self.calculate_total():>18,.0f} VNĐ")
-        print("-" * 30)
-
-# --- Chạy thử chương trình ---
-if __name__ == "__main__":
-    # Danh sách mặt hàng mẫu
-    cart = [
-        {'name': 'Sữa', 'price': 25000, 'quantity': 2},
-        {'name': 'Bánh mì', 'price': 15000, 'quantity': 5},
-        {'name': 'Trứng', 'price': 4000, 'quantity': 10}
-    ]
-    
-    # Tạo và in hóa đơn
-    my_invoice = Invoice("Nguyễn Văn A", cart)
-    my_invoice.display_invoice()
-    
+    def save_to_db(self):
+        invoices = load_data(INVOICES_FILE)
+        new_data = {
+            "room_number": self.room_number,
+            "customer": self.customer_name,
+            "date": self.date,
+            "total": self.calculate_total(),
+            "status": INVOICE_UNPAID
+        }
+        invoices.append(new_data)
+        save_data(INVOICES_FILE, invoices)

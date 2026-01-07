@@ -1,47 +1,43 @@
-# menu.py
+import menu
+import room
+import tenant
+import invoice
+import reporting
 
-def show_main_menu():
-    print("\n" + "=" * 40)
-    print("      HỆ THỐNG QUẢN LÝ PHÒNG TRỌ")
-    print("=" * 40)
-    print("1. Quản lý phòng")
-    print("2. Quản lý người thuê")
-    print("3. Lập hóa đơn")
-    print("4. Báo cáo - thống kê")
-    print("0. Thoát")
-    print("=" * 40)
+def main():
+    while True:
+        menu.show_main_menu()
+        choice = input("Chọn chức năng (0-4): ")
 
+        if choice == "1":
+            handle_room_sub_menu()
+        elif choice == "2":
+            handle_tenant_sub_menu()
+        elif choice == "3":
+            handle_invoice_sub_menu()
+        elif choice == "4":
+            handle_report_sub_menu()
+        elif choice == "0":
+            print("Cảm ơn bạn đã sử dụng hệ thống!")
+            break
+        else:
+            print("Lựa chọn không hợp lệ!")
 
-def room_menu():
-    print("\n--- QUẢN LÝ PHÒNG ---")
-    print("1. Thêm phòng")
-    print("2. Danh sách phòng")
-    print("3. Cập nhật phòng")
-    print("4. Xóa phòng")
-    print("0. Quay lại")
+# Ví dụ hàm xử lý menu con cho Phòng
+def handle_room_sub_menu():
+    while True:
+        menu.room_menu()
+        choice = input("Chọn chức năng: ")
+        if choice == "1":
+            # Gọi logic từ room.py
+            rid = input("Nhập mã phòng: ")
+            price = int(input("Nhập giá: "))
+            room.add_room(rid, price)
+        elif choice == "2":
+            rooms = room.list_rooms()
+            for r in rooms: print(r)
+        elif choice == "0":
+            break
 
-
-def tenant_menu():
-    print("\n--- QUẢN LÝ NGƯỜI THUÊ ---")
-    print("1. Thêm người thuê")
-    print("2. Danh sách người thuê")
-    print("3. Cập nhật người thuê")
-    print("4. Xóa người thuê")
-    print("0. Quay lại")
-
-
-def invoice_menu():
-    print("\n--- QUẢN LÝ HÓA ĐƠN ---")
-    print("1. Lập hóa đơn")
-    print("2. Danh sách hóa đơn")
-    print("3. Thanh toán hóa đơn")
-    print("0. Quay lại")
-
-
-def report_menu():
-    print("\n--- BÁO CÁO - THỐNG KÊ ---")
-    print("1. Doanh thu theo tháng")
-    print("2. Phòng còn trống")
-    print("3. Phòng chưa thanh toán")
-    print("0. Quay lại")
-
+if __name__ == "__main__":
+    main()

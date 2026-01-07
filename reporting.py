@@ -1,39 +1,36 @@
-import os
-from datetime import datetime
+from config import INVOICES_FILE, ROOMS_FILE, ROOM_EMPTY
+from data_handler import load_data
 
-def export_invoice_to_txt(invoice_data):
-    # Tạo thư mục 'exports' nếu máy bạn chưa có
-    if not os.path.exists('exports'):
-        os.makedirs('exports')
+def get_monthly_revenue(month, year):
+    """Tính tổng doanh thu thực tế từ các hóa đơn đã thanh toán trong tháng."""
+    all_invoices = load_data(INVOICES_FILE)
+    total = 0
+    count = 0
+    
+    for inv in all_invoices:
+        # Giả sử ngày lưu dạng 'dd-mm-yyyy'
+        inv_date = inv['date'].split(' ')[0]
+        d, m, y = inv_date.split('-')
+        
+        if m == month and y == year:
+            total += inv['total']
+            count += 1
+            
+    return total, count
 
-    # Đặt tên file theo mã phòng và thời gian
-    timestamp = datetime.now().strftime('%d%m%Y_%H%M%S')
-    file_name = f"exports/HoaDon_Phong_{invoice_data['room_id']}_{timestamp}.txt"
+def list_unpaid_invoices():
+    """Liệt kê các hóa đơn chưa thanh toán để chủ trọ nhắc nhở khách."""
+    all_invoices = load_data(INVOICES_FILE)
+    return [inv for inv in all_invoices if inv['status'] == "Chưa thanh toán"]
 
-    # Nội dung hóa đơn trình bày đẹp để nộp đồ án
-    content = f"""
-========================================
-       HÓA ĐƠN TIỀN PHÒNG TRỌ
-========================================
-Ngày xuất: {invoice_data['date']}
-Phòng: {invoice_data['room_id']}
-Khách thuê: {invoice_data['tenant']}
-----------------------------------------
-CHI TIẾT DỊCH VỤ:
-- Tiền phòng:      {invoice_data['details']['room_price']:,} VNĐ
-- Tiền điện:       {invoice_data['details']['electricity']:,} VNĐ
-- Tiền nước:       {invoice_data['details']['water']:,} VNĐ
-- Internet:        {invoice_data['details']['internet']:,} VNĐ
-- Phí rác:         {invoice_data['details']['garbage']:,} VNĐ
-----------------------------------------
-TỔNG CỘNG:         {invoice_data['total_amount']:,} VNĐ
-========================================
-      Cảm ơn quý khách đã thuê phòng!
-========================================
-"""
-    try:
-        with open(file_name, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print(f"✅ Đã xuất hóa đơn thành công vào folder exports!")
-    except Exception as e:
-        print(f"❌ Lỗi khi tạo file: {e}")
+def get_room_occupancy():
+    """Báo cáo tỷ lệ lấp đầy phòng."""
+    rooms = load_data(ROOMS_FILE)
+    total_rooms = len(rooms)
+    empty_rooms = len([r for r in rooms if r['status'] == ROOM_EMPTY])
+    
+    return {
+        "total": total_rooms,
+        "occupied": total_rooms - empty_rooms,
+        "empty": empty_rooms
+    }
