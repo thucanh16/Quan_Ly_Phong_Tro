@@ -6,6 +6,7 @@ import invoice
 def main_menu():
     print("\n====== APARTMENT MANAGEMENT ======")
     print("1. View room list")
+    
     print("2. Add a room")
     print("3. Add a tenant")
     print("4. Create invoice")
