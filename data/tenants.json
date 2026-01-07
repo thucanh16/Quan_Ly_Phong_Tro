@@ -12,5 +12,11 @@
         "room_id": "201",
         "start_date": "2025-12-20"
     }
-
-]   
+    {
+    "tenant_id": "T002",
+        "name": "Nguyen Van C",
+        "phone": "0987654321",
+        "room_id": "101",
+        "start_date": "2025-12-10"
+    }
+]
