@@ -2,18 +2,15 @@ import os
 from datetime import datetime
 
 def export_invoice_to_txt(invoice_data):
-    """
-    Hàm này nhận dữ liệu hóa đơn từ invoice.py và xuất ra file .txt
-    """
-    # 1. Tạo thư mục 'exports' nếu chưa có để lưu hóa đơn
+    # 1. Tạo thư mục 'exports' nếu chưa có
     if not os.path.exists('exports'):
         os.makedirs('exports')
 
-    # 2. Đặt tên file theo số phòng và thời gian thực để không bị ghi đè
+    # 2. Đặt tên file (Ví dụ: HoaDon_Phong_101_07012026.txt)
     timestamp = datetime.now().strftime('%d%m%Y_%H%M%S')
     file_name = f"exports/HoaDon_Phong_{invoice_data['room_id']}_{timestamp}.txt"
 
-    # 3. Nội dung hóa đơn được trình bày đẹp mắt
+    # 3. Nội dung hóa đơn trình bày đẹp
     content = f"""
 ========================================
        HÓA ĐƠN TIỀN PHÒNG TRỌ
@@ -34,11 +31,9 @@ TỔNG CỘNG:         {invoice_data['total_amount']:,} VNĐ
       Cảm ơn quý khách đã thuê phòng!
 ========================================
 """
-
-    # 4. Ghi nội dung vào file với bảng mã utf-8 để không lỗi tiếng Việt
     try:
         with open(file_name, 'w', encoding='utf-8') as f:
             f.write(content)
-        print(f"✅ Đã xuất hóa đơn thành công tại: {file_name}")
+        print(f"✅ Đã xuất hóa đơn: {file_name}")
     except Exception as e:
-        print(f"❌ Lỗi khi xuất file: {e}")
+        print(f"❌ Lỗi xuất file: {e}")
