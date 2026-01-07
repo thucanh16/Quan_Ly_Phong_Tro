@@ -1,21 +1,36 @@
 [
     {
-        "room_id": "101",
+        "id": "101",
         "price": 2500000,
+        "status": "Trống"
+    },
+    {
+        "id": "102",
+        "price": 3000000,
         "status": "Đã thuê"
     },
     {
-        "room_id": "102",
+        "id": "103",
+        "price": 2700000,
+        "status": "Đã thuê",
+        "tenant": "Nguyen Thi My Van"
+    },
+    {
+        "id": "104",
+        "price": 2600000,
+        "status": "Trống",
+        "tenant": null
+    },
+    {
+        "id": "105",
         "price": 2500000,
-        "status": "Trống"
+        "status": "Trống",
+        "tenant": null
     },
     {
-        "room_id": "201",
-        "price": 3000000,
-        "status": "Trống"
-    },
-    {
-        "room_id": "101",
-        "price": 2222
+        "id": "106",
+        "price": 2000000,
+        "status": "Đã thuê",
+        "tenant": "Nguyen Thi My Van"
     }
 ]
