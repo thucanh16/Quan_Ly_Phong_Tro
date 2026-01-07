@@ -1,0 +1,21 @@
+[
+    {
+        "room_id": "101",
+        "price": 2500000,
+        "status": "Đã thuê"
+    },
+    {
+        "room_id": "102",
+        "price": 2500000,
+        "status": "Trống"
+    },
+    {
+        "room_id": "201",
+        "price": 3000000,
+        "status": "Trống"
+    },
+    {
+        "room_id": "101",
+        "price": 2222
+    }
+]
