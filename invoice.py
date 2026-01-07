@@ -1,38 +1,31 @@
 from data_handler import load_data, save_data
 
-ROOM_PATH = "data/rooms.json"
-TENANT_PATH = "data/tenants.json"
-INVOICE_PATH = "data/invoices.json"
-
-def create_invoice(room_id):
-    rooms = load_data(ROOM_PATH)
-    tenants = load_data(TENANT_PATH)
-    invoices = load_data(INVOICE_PATH)
-
-    # 1. Check if the room exist or not
-    room = next((r for r in rooms if r["id"] == room_id), None)
-    if room is None:
-        print("The room doesn't exist!")
-        return
-
-    # 2. The room exist, then check if anyone is allocated for that room
-    tenant = next((t for t in tenants if t["room_id"] == room_id), None)
-    if tenant is None:
-        print("No one is allocated for this room, can't create an invoice !")
-        return
-
-    # 3. Get amount from room.price
-    amount = room["price"]
-
-    # 4. Create invoice
-    invoices.append({
-        "room_id": room_id,
-        "tenant": tenant["name"],
-        "amount": amount
-    })
-
-    save_data(INVOICE_PATH, invoices)
-    print(f"Create an invoice for the room {room_id} with price {amount} VNĐ — Tenant: {tenant['name']}")
-def mark_as_paid(inv_id):
-    # ... code xử lý thanh toán ...
-    save_to_history("PAYMENT_SUCCESS", {"invoice_id": inv_id, "status": "Paid"})
+def create_invoice(room_id, electricity, water):
+    # Đảm bảo đọc đúng file
+    rooms = load_data("data/rooms.json")
+    
+    # Tìm phòng - Chú ý ép kiểu str để so sánh chính xác
+    room = next((r for r in rooms if str(r.get('id')) == str(room_id)), None)
+    
+    if room:
+        try:
+            # Tính toán tiền bạc
+            price = room.get('price', 0)
+            total = price + (electricity * 3500) + (water * 15000)
+            
+            new_inv = {
+                "room_id": room_id,
+                "total": total,
+                "date": "07/01/2026"
+            }
+            
+            # Lưu vào lịch sử
+            history = load_data("data/history.json")
+            history.append(new_inv)
+            save_data("data/history.json", history)
+            
+            print(f"✅ Thành công! Tổng tiền: {total:,} VNĐ")
+        except Exception as e:
+            print(f"❌ Lỗi tính toán: {e}")
+    else:
+        print(f"❌ Không tìm thấy phòng mã {room_id}!")

@@ -32,5 +32,21 @@
             "garbage_fee": 50000
         },
         "status": "active"
+    },
+    {
+        "name": "Nguyen Thi My Van",
+        "room_id": "T001"
+    },
+    {
+        "name": "Nguyen Thuc Anh",
+        "room_id": "103"
+    },
+    {
+        "name": "Nguyen Thuc Anh",
+        "room_id": "103"
+    },
+    {
+        "name": "Nguyen Thuc Anh",
+        "room_id": "103"
     }
 ]

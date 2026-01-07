@@ -1,13 +1,35 @@
-  [
-    {
-        "invoice_id": "INV_2025_12_101",
-        "room_id": "101",
-        "tenant_id": "TO01",
-        "month": "12/2025",
-        "electricity_cost": 150000,
-        "water_cost": 50000,
-        "room_cost": 2500000,
-        "total": 2700000,
-        "status": "Đã thanh toán"
+from data_handler import load_data, save_data
+from datetime import datetime
+
+def create_invoice(room_id, electricity_usage, water_usage):
+    rooms = load_data("data/rooms.json")
+    invoices = load_data("data/invoices.json")
+    
+    # Tìm phòng bằng cách ép kiểu string để so sánh an toàn
+    # Dùng r.get("id") để nếu phòng nào thiếu 'id' chương trình cũng không bị crash
+    room = next((r for r in rooms if str(r.get("id")) == str(room_id)), None)
+    
+    if room is None:
+    # Dùng r.get("id") thay vì r["id"] để không bao giờ bị chữ đỏ nữa
+    room = next((r for r in rooms if str(r.get("id")) == str(room_id)), None)
+        return None
+
+    # Lấy giá phòng (nếu không thấy giá thì mặc định là 0)
+    room_price = room.get("price", 0)
+    
+    # Tính toán
+    total = room_price + (electricity_usage * 3500) + (water_usage * 15000)
+    
+    new_invoice = {
+        "invoice_id": len(invoices) + 1,
+        "room_id": room_id,
+        "total": total,
+        "date": datetime.now().strftime("%d/%m/%Y"),
+        "status": "Chưa thanh toán"
     }
-]   
+    
+    invoices.append(new_invoice)
+    save_data("data/invoices.json", invoices)
+    
+    print(f"\n✅ Thành công! Tổng tiền phòng {room_id} là: {total:,} VNĐ")
+    return new_invoice
