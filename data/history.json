@@ -1,0 +1,29 @@
+import json
+from datetime import datetime
+from data_handler import load_data, save_data
+
+HISTORY_PATH = "data/history.json"
+
+def save_to_history(event_type, details):
+    """
+    Hàm này dùng chung cho toàn bộ dự án.
+    - event_type: Loại sự kiện (Ví dụ: 'THU_TIEN', 'KHACH_ROI_DI', 'SUA_CHUA')
+    - details: Dữ liệu chi tiết dạng Dictionary
+    """
+    # 1. Đọc dữ liệu cũ
+    history_list = load_data(HISTORY_PATH)
+    
+    # 2. Tạo bản ghi mới
+    new_entry = {
+        "timestamp": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+        "event_type": event_type,
+        "details": details
+    }
+    
+    # 3. Thêm vào danh sách và lưu lại
+    history_list.append(new_entry)
+    save_data(HISTORY_PATH, history_list)
+    print(f"✅ Đã ghi nhận lịch sử: {event_type}")
+
+# Ví dụ cách dùng:
+# save_to_history("THANH_TOAN", {"phong": "102", "tien": 2000000})

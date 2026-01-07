@@ -33,3 +33,6 @@ def create_invoice(room_id):
 
     save_data(INVOICE_PATH, invoices)
     print(f"Create an invoice for the room {room_id} with price {amount} VNĐ — Tenant: {tenant['name']}")
+def mark_as_paid(inv_id):
+    # ... code xử lý thanh toán ...
+    save_to_history("PAYMENT_SUCCESS", {"invoice_id": inv_id, "status": "Paid"})
