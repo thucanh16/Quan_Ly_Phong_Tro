@@ -1,0 +1,52 @@
+[
+    {
+        "tenant_id": "T001",
+        "name": "Nguyễn Văn A",
+        "phone": "0901234567",
+        "id_card": "012345678901",
+        "room_id": "101",
+        "rent_price": 3000000,
+        "deposit": 3000000,
+        "start_date": "2025-12-01",
+        "services": {
+            "electricity_price": 3500,
+            "water_price": 20000,
+            "internet_price": 100000,
+            "garbage_fee": 50000
+        },
+        "status": "active"
+    },
+    {
+        "tenant_id": "T002",
+        "name": "Trần Thị B",
+        "phone": "0987654321",
+        "id_card": "098765432109",
+        "room_id": "201",
+        "rent_price": 2500000,
+        "deposit": 2500000,
+        "start_date": "2025-12-20",
+        "services": {
+            "electricity_price": 3500,
+            "water_price": 20000,
+            "internet_price": 100000,
+            "garbage_fee": 50000
+        },
+        "status": "active"
+    },
+    {
+        "name": "Nguyen Thi My Van",
+        "room_id": "T001"
+    },
+    {
+        "name": "Nguyen Thuc Anh",
+        "room_id": "103"
+    },
+    {
+        "name": "Nguyen Thuc Anh",
+        "room_id": "103"
+    },
+    {
+        "name": "Nguyen Thuc Anh",
+        "room_id": "103"
+    }
+]

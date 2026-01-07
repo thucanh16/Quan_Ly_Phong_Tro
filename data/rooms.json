@@ -1,0 +1,58 @@
+[
+    {
+        "id": "101",
+        "price": 2500000,
+        "status": "Trống"
+    },
+    {
+        "id": "102",
+        "price": 3000000,
+        "status": "Đã thuê"
+    },
+    {
+        "id": "103",
+        "price": 2700000,
+        "status": "Đã thuê",
+        "tenant": "Nguyen Thi My Van"
+    },
+    {
+        "id": "104",
+        "price": 2600000,
+        "status": "Trống",
+        "tenant": null
+    },
+    {
+        "id": "105",
+        "price": 2500000,
+        "status": "Trống",
+        "tenant": null
+    },
+    {
+        "id": "106",
+        "price": 2000000,
+        "status": "Đã thuê",
+        "tenant": "Nguyen Thi My Van"
+    },
+    {
+        "id": "107",
+        "price": 2400000,
+        "status": "Đã thuê",
+        "tenant": "Yen Nhi"
+    },
+    {
+        "id": "108",
+        "price": 2500000,
+        "status": "Trống"
+    },
+    {
+        "id": "109",
+        "price": 2300000,
+        "status": "Đã thuê",
+        "tenant": "Tuong Vy"
+    },
+    {
+        "id": "201",
+        "price": 2500000,
+        "status": "Trống"
+    }
+]
