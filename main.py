@@ -17,50 +17,27 @@ def main_menu():
 
 def main():
     while True:
-        main_menu()
-        choice = input("Choose: ")
+        print("\n" + "="*25 + "\n1. Xem phòng\n2. Thêm phòng\n3. Thêm khách\n4. Lập hóa đơn\n5. Tìm phòng\n6. Lịch sử\n0. Thoát\n" + "="*25)
+        choice = input("Chọn: ")
 
-        if choice == "1":
-            rooms = room.list_rooms()
-            print("\n--- ROOM LIST ---")
-            for r in rooms:
-                print(r)
-
-        elif choice == "2":
-            rid = input("Enter room ID: ")
-            try:
-                price = int(input("Enter room price: "))
-                room.add_room(rid, price)
-                print("[SUCCESS] Room added.")
-            except ValueError:
-                print("[ERROR] Price must be a number!")
-
-        elif choice == "3":
-            name = input("Enter tenant name: ")
-            rid = input("Enter room ID: ")
-            tenant.add_tenant(name, rid)
-            print("[SUCCESS] Tenant added.")
-
+        if choice == "1": room.view_rooms()
+        elif choice == "2": room.add_room()
+        elif choice == "3": tenant.add_tenant_to_room()
         elif choice == "4":
-            rid = input("Enter room ID: ")
-            invoice.create_invoice(rid)
-            print("[SUCCESS] Invoice created.")
-
-        elif choice == "5":
-            rid = input("Enter room ID: ")
-            result = room.find_room(rid)
-            if result:
-                print(result)
-            else:
-                print("[INFO] Room not found.")
-
-        elif choice == "0":
-            print("Exit program.")
-            break
-
-        else:
-            print("[ERROR] Invalid choice!")
-
+            r_id = input("Mã phòng: ")
+            try:
+                e = int(input("Chỉ số điện: "))
+                w = int(input("Chỉ số nước: "))
+                invoice.create_invoice(r_id, e, w)
+            except: print("❌ Vui lòng nhập số!")
+        elif choice == "5": room.find_room()
+        elif choice == "6":
+            history = load_data("data/history.json")
+            print("\n--- LỊCH SỬ ---")
+            for h in history:
+                print(f"Phòng: {h.get('room_id')} | Tiền: {h.get('total_amount', 0):,} | Ngày: {h.get('date')}")
+        elif choice == "0": break
+        else: print("❌ Chọn sai!")
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,27 @@
+{
+    "electricity": {
+        "unit": "kWh",
+        "price": 3500,
+        "description": "Tiền điện tính theo số ký"
+    },
+    "water": {
+        "unit": "m3",
+        "price": 20000,
+        "description": "Tiền nước tính theo khối"
+    },
+    "internet": {
+        "unit": "phòng",
+        "price": 100000,
+        "description": "Phí mạng internet cố định hàng tháng"
+    },
+    "garbage": {
+        "unit": "phòng",
+        "price": 50000,
+        "description": "Phí thu gom rác và vệ sinh chung"
+    },
+    "management_fee": {
+        "unit": "phòng",
+        "price": 50000,
+        "description": "Phí quản lý vận hành"
+    }
+}
