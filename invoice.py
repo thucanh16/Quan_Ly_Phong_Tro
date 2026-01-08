@@ -1,15 +1,17 @@
-def create_invoice():
-    room_id = input("Mã phòng: ").strip()
+def create_invoice(r_id, e, w):
+    """Hàm in hóa đơn dựa trên mã phòng, số điện và số nước"""
+    print("\n" + "="*30)
+    print(f"   HÓA ĐƠN PHÒNG: {r_id}")
+    print("="*30)
     
-    try:
-        # Sử dụng .strip() để xóa mọi dấu cách thừa và ép kiểu trực tiếp
-        dien_moi = int(input("Chỉ số điện: ").strip())
-        nuoc_moi = int(input("Chỉ số nước: ").strip())
-        
-        # Nếu chạy đến đây tức là đã nhập số thành công
-        print(f"\n✅ Đã nhận: Điện {dien_moi}, Nước {nuoc_moi}")
-        # Thực hiện tính toán tiếp ở đây...
-        
-    except ValueError:
-        # Nếu người dùng nhập chữ hoặc để trống, Python sẽ nhảy vào đây
-        print("❌ Vui lòng nhập số!")
+    # Tính toán tiền (Giá giả định)
+    tien_dien = e * 3500
+    tien_nuoc = w * 10000
+    tong_cong = tien_dien + tien_nuoc
+    
+    print(f"⚡ Tiền điện ({e} số): {tien_dien:,} VND")
+    print(f"💧 Tiền nước ({w} khối): {tien_nuoc:,} VND")
+    print("-" * 30)
+    print(f"💰 TỔNG CỘNG: {tong_cong:,} VND")
+    print("="*30)
+    print("✅ In hóa đơn thành công!")
