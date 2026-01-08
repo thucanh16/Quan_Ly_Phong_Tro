@@ -1,18 +1,8 @@
-# config.py
+import os
 
-# Đường dẫn thư mục dữ liệu
-DATA_DIR = "data/"
+DATA_DIR = "data"
+# File này lưu toàn bộ lịch sử để tính doanh thu (Chức năng 6 & 7)
+INVOICES_FILE = os.path.join(DATA_DIR, "invoices.json")
 
-ROOMS_FILE = DATA_DIR + "rooms.json"
-TENANTS_FILE = DATA_DIR + "tenants.json"
-INVOICES_FILE = DATA_DIR + "invoices.json"
-SERVICES_FILE = DATA_DIR + "services.json"
-HISTORY_FILE = DATA_DIR + "history.json"
-
-# Trạng thái phòng
-ROOM_EMPTY = "Trống"
-ROOM_OCCUPIED = "Đã thuê"
-
-# Trạng thái hóa đơn
-INVOICE_PAID = "Đã thanh toán"
-INVOICE_UNPAID = "Chưa thanh toán"
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)

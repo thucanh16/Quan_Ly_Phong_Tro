@@ -1,25 +1,39 @@
 import json
+import os
+from config import INVOICES_FILE
 
-def create_invoice(r_id, e, w):
-    # 1. Tính tiền (Giữ nguyên logic cũ của bạn)
-    tong = (e * 3500) + (w * 10000)
-    
-    # 2. In kết quả ra màn hình
-    print(f"\n✅ ĐÃ TẠO HÓA ĐƠN PHÒNG {r_id}")
-    print(f"Tổng tiền: {tong:,} VND")
-
-    # 3. LƯU LỊCH SỬ (Phần thêm mới)
-    file_path = "data/history.json"
+def load_history():
+    """Chức năng 6: Lấy dữ liệu lịch sử từ file JSON"""
+    if not os.path.exists(INVOICES_FILE):
+        return []
     try:
-        # Đọc dữ liệu cũ từ file
-        with open(file_path, "r", encoding="utf-8") as f:
-            history = json.load(f)
+        with open(INVOICES_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
     except:
-        history = []
+        return []
 
-    # Viết thêm dòng mới vào danh sách
-    history.append(f"Phòng {r_id}: Điện {e}, Nước {w} -> Tổng {tong:,} VND")
-
-    # Ghi lại danh sách mới vào file
-    with open(file_path, "w", encoding="utf-8") as f:
-        json.dump(history, f, ensure_ascii=False, indent=4)
+def save_invoice(r_id, room_price, electric, water):
+    """Chức năng 4: Tính tổng, Lưu JSON và Xuất bản in .txt"""
+    total = room_price + electric + water
+    invoice_data = {
+        "room_id": r_id,
+        "total": total,
+        "details": {"room": room_price, "electric": electric, "water": water}
+    }
+    
+    # Lưu vào lịch sử hệ thống để tính doanh thu
+    history = load_history()
+    history.append(invoice_data)
+    with open(INVOICES_FILE, "w", encoding="utf-8") as f:
+        json.dump(history, f, indent=4, ensure_ascii=False)
+    
+    # Xuất file text (HoaDon_Phong_xxx.txt) như bạn thấy trong VS Code
+    file_name = f"HoaDon_Phong_{r_id}.txt"
+    with open(file_name, "w", encoding="utf-8") as f:
+        f.write(f"===== HÓA ĐƠN PHÒNG {r_id} =====\n")
+        f.write(f"Tiền phòng: {room_price:,} VND\n")
+        f.write(f"Tiền điện:  {electric:,} VND\n")
+        f.write(f"Tiền nước:  {water:,} VND\n")
+        f.write(f"---------------------------\n")
+        f.write(f"TỔNG CỘNG:  {total:,} VND\n")
+    return total

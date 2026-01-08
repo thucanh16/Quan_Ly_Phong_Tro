@@ -1,36 +1,26 @@
 [
     {
         "id": "101",
-        "price": 2500000,
-        "status": "Trống"
+        "price": 1500000,
+        "status": "Đã thuê",
+        "tenant": "Nguyen Thi My Van"
     },
     {
         "id": "102",
-        "price": 3000000,
-        "status": "Đã thuê"
+        "price": 1500000,
+        "status": "Trống",
+        "tenant": "Chưa có"
     },
     {
         "id": "103",
-        "price": 2700000,
-        "status": "Đã thuê",
-        "tenant": "Nguyen Thi My Van"
+        "price": 1500000,
+        "status": "Trống",
+        "tenant": "Chưa có"
     },
     {
         "id": "104",
-        "price": 2600000,
+        "price": 1500000,
         "status": "Trống",
-        "tenant": null
-    },
-    {
-        "id": "105",
-        "price": 2500000,
-        "status": "Đã thuê",
-        "tenant": "Hai Yen"
-    },
-    {
-        "id": "106",
-        "price": 2000000,
-        "status": "Đã thuê",
-        "tenant": "Nguyen Thi My Van"
+        "tenant": "Chưa có"
     }
 ]

@@ -1,35 +1,6 @@
-from datetime import datetime
-from data_handler import load_data, save_data
-from config import INVOICES_FILE
-
-class Invoice:
-    def __init__(self, room_id, room_price, electricity_usage, water_usage):
-        self.room_id = room_id
-        self.room_price = room_price
-        self.electricity_usage = electricity_usage
-        self.water_usage = water_usage
-        self.total = self.calculate_total()
-
-    def calculate_total(self):
-        # Tính toán theo công thức bạn đã viết
-        return self.room_price + (self.electricity_usage * 3500) + (self.water_usage * 15000)
-
-def create_new_invoice(room_id, electricity, water, rooms_data):
-    invoices = load_data(INVOICES_FILE)
-    room = next((r for r in rooms_data if str(r.get('id')) == room_id), None)
-    
-    if room:
-        price = room.get('price', 0)
-        inv = Invoice(room_id, price, electricity, water)
-        
-        new_data = {
-            "invoice_id": len(invoices) + 1,
-            "room_id": room_id,
-            "total": inv.total,
-            "date": datetime.now().strftime("%d/%m/%Y"),
-            "status": "chưa thanh toán"
-        }
-        
-        invoices.append(new_data)
-        save_data(INVOICES_FILE, invoices)
-        print(f"✅ Đã tạo hóa đơn cho phòng {room_id} thành công!")
+[
+    {
+        "room_id": "101",
+        "total": 1500012
+    }
+]
