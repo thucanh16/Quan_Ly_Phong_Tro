@@ -24,12 +24,11 @@ def main():
         elif choice == "2": room.add_room()
         elif choice == "3": tenant.add_tenant_to_room()
         elif choice == "4":
-            r_id = input("Mã phòng: ")
-            try:
-                e = int(input("Chỉ số điện: "))
-                w = int(input("Chỉ số nước: "))
-                invoice.create_invoice(r_id, e, w)
-            except: print("❌ Vui lòng nhập số!")
+        r_id = input("Mã phòng: ")
+        e = int(input("Chỉ số điện: "))
+        w = int(input("Chỉ số nước: "))
+        # Gọi hàm từ file invoice
+        invoice.create_invoice(r_id, e, w)
         elif choice == "5": room.find_room()
         elif choice == "6":
             history = load_data("data/history.json")
